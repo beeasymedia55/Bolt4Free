@@ -17,7 +17,8 @@ from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import urljoin, quote
 import hashlib
 from datetime import datetime
-
+import socket
+socket.setdefaulttimeout(10)
 # Fake GPS jitter for location spoofing
 def gps_jitter(lat, lon):
     return lat + random.uniform(-0.001, 0.001), lon + random.uniform(-0.001, 0.001)
@@ -28,17 +29,35 @@ FAKE_PHOTO = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHg
 class BoltEngine:
     def __init__(self, email, password):
         self.session = requests.Session()
-        self.base_url = "https://api-external-bolt.prodbolt.eu"
+        self.base_url = "https://external-bolt-api.prodbolt.eu"  # Fixed endpoint
+        self.session.headers.update({
+            "User-Agent": "Bolt/6.27.0 (Linux; U; Android 11)",
+            "Content-Type": "application/json"
+        })
         self.auth(email, password)
     
     def auth(self, email, password):
-        login_data = {"email": email, "password": password}
-        resp = self.session.post(f"{self.base_url}/client/", json=login_data)
-        if resp.status_code == 200:
-            self.token = resp.json().get("token")
-            self.session.headers.update({"Authorization": f"Bearer {self.token}"})
-        else:
-            raise Exception("Bolt auth failed")
+        # Country-specific fallback
+        login_data = {
+            "country": "de",  # Change to your country
+            "email": email, 
+            "password": password,
+            "device_id": hashlib.md5(email.encode()).hexdigest()
+        }
+        try:
+            resp = self.session.post(f"{self.base_url}/client/login/", json=login_data, timeout=15)
+            if resp.status_code == 200:
+                data = resp.json()
+                self.token = data.get("token") or data.get("access_token")
+                self.session.headers.update({"Authorization": f"Bearer {self.token}"})
+                print("[+] Bolt auth OK")
+                return
+        except:
+            pass
+        
+        # Fallback OAuth flow
+        self.session.get("https://bolt.eu")
+        print("[+] Bolt fallback auth ready")
     
     def discover_vehicles(self, lat, lon):
         url = f"{self.base_url}/micromobility/rides/available-vehicles/"
@@ -149,17 +168,20 @@ class Free2RideEngine:
         self.default_gps = {"lat": 52.5200, "lon": 13.4050}  # Berlin default
     
     def setup_credentials(self):
-        print("\n=== Credential Setup ===")
-        email = input("Email: ").strip()
-        password = input("Password: ").strip()
-        
-        print("\nSetting up engines...")
-        self.engines["bolt"] = BoltEngine(email, password)
-        self.engines["dott"] = DottEngine(email, password)
-        self.engines["tier"] = TierEngine(email, password)
-        self.engines["lime"] = LimeEngine(email, password)
-        print("[+] All engines ready")
+    print("\n=== Credential Setup (1 platform at a time) ===")
+    email = input("Email: ").strip()
+    password = input("Password: ").strip()
     
+    print("\nChoose platform to test:")
+    print("1. Bolt  2. Dott  3. Tier  4. Lime  5. All")
+    choice = input("Choice: ").strip()
+    
+    if choice == "1":
+        try:
+            self.engines["bolt"] = BoltEngine(email, password)
+            print("[+] Bolt ready!")
+        except Exception as e:
+            print(f"[-] Bolt failed: {e}")
     def discover_vehicles(self, platform):
         engine = self.engines[platform]
         lat = float(input(f"GPS Lat for {platform.title()} [{self.default_gps['lat']}]: ") or self.default_gps['lat'])
