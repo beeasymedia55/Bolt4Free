@@ -168,20 +168,20 @@ class Free2RideEngine:
         self.default_gps = {"lat": 52.5200, "lon": 13.4050}  # Berlin default
     
     def setup_credentials(self):
-    print("\n=== Credential Setup (1 platform at a time) ===")
-    email = input("Email: ").strip()
-    password = input("Password: ").strip()
+        print("\n=== Credential Setup (1 platform at a time) ===")
+        email = input("Email: ").strip()
+        password = input("Password: ").strip()
     
-    print("\nChoose platform to test:")
-    print("1. Bolt  2. Dott  3. Tier  4. Lime  5. All")
-    choice = input("Choice: ").strip()
+        print("\nChoose platform to test:")
+        print("1. Bolt  2. Dott  3. Tier  4. Lime  5. All")
+        choice = input("Choice: ").strip()
     
-    if choice == "1":
-        try:
-            self.engines["bolt"] = BoltEngine(email, password)
-            print("[+] Bolt ready!")
-        except Exception as e:
-            print(f"[-] Bolt failed: {e}")
+        if choice == "1":
+            try:
+                self.engines["bolt"] = BoltEngine(email, password)
+                print("[+] Bolt ready!")
+            except Exception as e:
+                print(f"[-] Bolt failed: {e}")
     def discover_vehicles(self, platform):
         engine = self.engines[platform]
         lat = float(input(f"GPS Lat for {platform.title()} [{self.default_gps['lat']}]: ") or self.default_gps['lat'])
