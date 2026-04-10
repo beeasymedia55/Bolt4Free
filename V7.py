@@ -61,10 +61,10 @@ class Free2Ride:
         
     def live_recon(self, provider='all', radius=1200):
         """REAL Vehicle Recon - Battery >30% + Available"""
-    vehicles = []
-        providers = ['bolt','lime','tier','dott'] if provider=='all' else [provider]
+        vehicles = []
+            providers = ['bolt','lime','tier','dott'] if provider=='all' else [provider]
         
-        print(f"🔍 LIVE RECON {provider.upper()} ({radius}m)")
+            print(f"🔍 LIVE RECON {provider.upper()} ({radius}m)")
         
         def scan_provider(p):
             if p not in self.auth_tokens:
