@@ -1,8 +1,3 @@
-# In Termux
-pkg update && pkg install python bluez termux-api
-pip install bleak
-
-cat > dott_unlock.py << 'EOF'
 import asyncio
 import bleak
 import base64
