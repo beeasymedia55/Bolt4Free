@@ -33,4 +33,3 @@ async def main():
 asyncio.run(main())
 EOF
 
-python dott_unlock.py
