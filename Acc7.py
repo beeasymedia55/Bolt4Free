@@ -104,7 +104,7 @@ def webcast_like(bot):
     params = bot.params.copy()
     params.update({"room_id": CONFIG["target_room_id"], "count": "10"})
     
-    m = SignerPy.sign(params=params, payload={})
+    m = SignerPy.sign(params=params, payload='{}')
     headers = {'X-Gorgon': m['x-gorgon'], 'X-Tt-Token': bot.tt_token}
     try:
         bot.session.post(url, params=params, headers=headers)
