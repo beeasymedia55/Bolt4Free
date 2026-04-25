@@ -86,7 +86,7 @@ def webcast_enter(bot):
     params = bot.params.copy()
     params.update({"room_id": CONFIG["target_room_id"], "enter_source": "live_cell"})
     
-    m = SignerPy.sign(params=params, payload={})
+    m = SignerPy.sign(params=params, payload='{}')
     headers = {
         'User-Agent': "TikTok 37.8.5 Android",
         'X-Gorgon': m['x-gorgon'],
