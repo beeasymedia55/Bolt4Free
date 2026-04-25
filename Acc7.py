@@ -36,6 +36,10 @@ class TikTokBot:
             "aid": "1233",
             "app_name": "musical_ly",
             "version_code": "370805",
+            "version_name": "37.8.5",      # <--- Added this (Fixes the KeyError)
+            "os_version": "9",             # <--- Added for Argus stability
+            "device_brand": "OnePlus",     # <--- Added for Argus stability
+            "device_type": "NE2211",       # <--- Added for Argus stability
             "language": "en",
             "openudid": binascii.hexlify(os.urandom(8)).decode(),
         }
