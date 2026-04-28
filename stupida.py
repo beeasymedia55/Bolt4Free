@@ -5,7 +5,8 @@ import os, sys, ssl, re, time, random, threading, requests, hashlib, json, base6
 from urllib3.exceptions import InsecureRequestWarning
 from http import cookiejar
 from concurrent.futures import ThreadPoolExecutor
-
+from colorama import Fore, init 
+init(autoreset=True)
 # --- INITIALISIERUNG & BYPASS ---
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
