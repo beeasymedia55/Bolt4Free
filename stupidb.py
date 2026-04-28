@@ -85,7 +85,7 @@ fails = 0
 
 # --- HILFSFUNKTIONEN ---
 def get_session():
-    for f in ["sessions.txt", "accounts.txt"]:
+    for f in ["session.txt", "accounts.txt"]:
         if os.path.exists(f):
             lines = open(f).read().splitlines()
             if lines: return random.choice(lines)
