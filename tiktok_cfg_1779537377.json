@@ -1,0 +1,18 @@
+{
+  "username": "nika_sweetie",
+  "room_id": 7643052876868176643,
+  "viewer_count": 9999,
+  "ramp_up_seconds": 10,
+  "region": "us",
+  "max_concurrent": 0,
+  "ws_timeout": 30,
+  "heartbeat_interval": 3600,
+  "proxy_file": "proxies2.txt",
+  "proxy_rotation": "round_robin",
+  "behavior_profile": "realistic",
+  "min_watch_time": 200,
+  "max_watch_time": 3000,
+  "fingerprint_profile": "random",
+  "realtime_dashboard": false,
+  "save_report": false
+}

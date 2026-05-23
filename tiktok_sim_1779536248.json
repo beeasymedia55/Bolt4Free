@@ -1,0 +1,13 @@
+{
+  "elapsed": 10.1,
+  "launched": 50,
+  "connected": 0,
+  "active": 0,
+  "disconnected": 0,
+  "errors": 0,
+  "rate": "0.0%",
+  "sent": 0,
+  "recv": 0,
+  "hb": 0,
+  "latency": 0
+}

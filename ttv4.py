@@ -275,10 +275,6 @@ class TikTokViewer:
     async def connect(self):
         url=await self._url(); fp=self.fp["fp"]
         h={"User-Agent":self.ua,"Origin":"https://www.tiktok.com","Referer":f"https://www.tiktok.com/@{self.cfg.username}/live" if self.cfg.username else "https://www.tiktok.com/","Accept-Language":fp["language"],"Accept-Encoding":"gzip, deflate, br, zstd","Cache-Control":"no-cache","Sec-WebSocket-Version":"13","Cookie":f"ttwid={self.fp['web_id']}; sessionid={self.fp['session_id']}; tt_target_idc={self.cfg.region}"}
-
-async def connect(self):
-        url=await self._url(); fp=self.fp["fp"]
-        h={"User-Agent":self.ua,"Origin":"https://www.tiktok.com","Referer":f"https://www.tiktok.com/@{self.cfg.username}/live" if self.cfg.username else "https://www.tiktok.com/","Accept-Language":fp["language"],"Accept-Encoding":"gzip, deflate, br, zstd","Cache-Control":"no-cache","Sec-WebSocket-Version":"13","Cookie":f"ttwid={self.fp['web_id']}; sessionid={self.fp['session_id']}; tt_target_idc={self.cfg.region}"}
         ctx=ssl.create_default_context(); ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
         try:
             self.ws=await websockets.connect(url,extra_headers=h,ping_interval=None,close_timeout=5,max_size=2**20,open_timeout=self.cfg.ws_timeout,ssl=ctx)
@@ -551,8 +547,8 @@ class App:
             print(f"  Status:  {'LIVE' if info.get('status')==2 else 'Ended'}")
             print(f"  Viewers: {info.get('viewers','N/A')}")
             o=info.get('owner',{})
-            if o: print(f"  Host:    {o.get('nickname')} (@{o.get('username')}) F: {o.get('followers',0)}
-if o: print(f"  Host:    {o.get('nickname')} (@{o.get('username')}) F: {o.get('followers',0)}")
+            if o:
+                print(f"  Host:    {o.get('nickname')} (@{o.get('username')}) F: {o.get('followers',0)}")
         if rid and input("\n  Set as target? (y/n): ").strip().lower()=='y':
             self.cfg.room_id=rid; self.cfg.username=u; print("[+] Target set!")
         input("\nPress Enter...")

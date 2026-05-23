@@ -1,0 +1,44 @@
+[
+  {
+    "test": 1,
+    "viewers": 10,
+    "connected": 0,
+    "rate": "0.0%",
+    "time": 10.0
+  },
+  {
+    "test": 2,
+    "viewers": 25,
+    "connected": 0,
+    "rate": "0.0%",
+    "time": 10.0
+  },
+  {
+    "test": 3,
+    "viewers": 50,
+    "connected": 0,
+    "rate": "0.0%",
+    "time": 10.1
+  },
+  {
+    "test": 4,
+    "viewers": 100,
+    "connected": 0,
+    "rate": "0.0%",
+    "time": 10.1
+  },
+  {
+    "test": 5,
+    "viewers": 200,
+    "connected": 0,
+    "rate": "0.0%",
+    "time": 10.9
+  },
+  {
+    "test": 6,
+    "viewers": 500,
+    "connected": 0,
+    "rate": "0.0%",
+    "time": 25.1
+  }
+]
