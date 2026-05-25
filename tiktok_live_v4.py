@@ -596,9 +596,7 @@ class RoomFetcher:
                     "Cookie": self.sm.get_cookie_header(),
                     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                     "Accept-Language": "en-US,en;q=0.5",
-                },
-                timeout=15,
-                "Allow": "GET"
+                    "Allow": "GET",
                 },
                 timeout=15,
                 allow_redirects=True
